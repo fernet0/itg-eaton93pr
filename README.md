@@ -45,7 +45,17 @@ docker-compose up
 4. Import the dashboards ("Dashboards" -> "Import") from the dir grafana of this repo 
 
 ### Screenshots
+#### Batteries
 ![Battery](images/bat.png)
+
+#### Input
 ![Input](images/in.png)
-![Out](images/out.png)
+
+#### Output
+![Output](images/out.png)
+
+#### Mode
 ![Mode](images/mode.png)
+
+#### Failure (input loss)
+![Failure](images/failure.png)
