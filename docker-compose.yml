@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  influxdb:
+    image: influxdb
+    volumes:
+      - ${PWD}/influx-data:/var/lib/influxdb:Z  
+  grafana:
+    depends_on: ["influxdb"]
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    links: 
+      - influxdb:influxdb
+  telegraf:
+    build: telegraf
+    depends_on: ["influxdb"]
+    links:
+      - influxdb:influxdb
+    environment:
+      - UPS_HOST=${UPS_HOST}
