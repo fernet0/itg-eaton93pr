@@ -43,3 +43,9 @@ docker-compose up
   - Database: ups
 
 4. Import the dashboards ("Dashboards" -> "Import") from the dir grafana of this repo 
+
+### Screenshots
+![Battery](images/bat.png)
+![Input](images/in.png)
+![Out](images/out.png)
+![Mode](images/mode.png)
