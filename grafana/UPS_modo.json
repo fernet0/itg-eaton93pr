@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_UPS",
-      "label": "ups",
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
       "description": "",
       "type": "datasource",
       "pluginId": "influxdb",
@@ -15,6 +15,12 @@
       "id": "grafana",
       "name": "Grafana",
       "version": "4.3.2"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
     },
     {
       "type": "datasource",
@@ -32,17 +38,17 @@
   "annotations": {
     "list": []
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "hideControls": false,
+  "hideControls": true,
   "id": null,
   "links": [],
   "refresh": "1m",
   "rows": [
     {
       "collapse": false,
-      "height": 249,
+      "height": 223,
       "panels": [
         {
           "cacheTimeout": null,
@@ -53,7 +59,7 @@
             "rgba(59, 169, 56, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_UPS}",
+          "datasource": "${DS_INFLUXDB}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -144,7 +150,7 @@
             }
           ],
           "thresholds": "2",
-          "title": "En Batería",
+          "title": "Batería",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "200%",
@@ -156,12 +162,12 @@
             },
             {
               "op": "=",
-              "text": "ONLINE",
+              "text": "OK",
               "value": "2"
             },
             {
               "op": "=",
-              "text": "BATERÍA",
+              "text": "EN BATERIA",
               "value": "1"
             }
           ],
@@ -176,7 +182,7 @@
             "rgba(59, 169, 56, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_UPS}",
+          "datasource": "${DS_INFLUXDB}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -267,7 +273,7 @@
             }
           ],
           "thresholds": "2",
-          "title": "En Bypass",
+          "title": "Bypass",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "200%",
@@ -279,12 +285,12 @@
             },
             {
               "op": "=",
-              "text": "ONLINE",
+              "text": "OK",
               "value": "2"
             },
             {
               "op": "=",
-              "text": "BYPASS",
+              "text": "EN BYPASS",
               "value": "1"
             }
           ],
@@ -297,6 +303,140 @@
       "showTitle": true,
       "title": "Modo",
       "titleSize": "h2"
+    },
+    {
+      "collapse": false,
+      "height": 324,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_INFLUXDB}",
+          "fill": 1,
+          "id": 3,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Bat",
+              "dsType": "influxdb",
+              "groupBy": [],
+              "measurement": "eaton-pr93",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "on_bat"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "agent_host",
+                  "operator": "=",
+                  "value": "10.0.2.1"
+                }
+              ]
+            },
+            {
+              "alias": "Bypass",
+              "dsType": "influxdb",
+              "groupBy": [],
+              "measurement": "eaton-pr93",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "on_bypass"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "agent_host",
+                  "operator": "=",
+                  "value": "10.0.2.1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Pulso",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Estado",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
     }
   ],
   "schemaVersion": 14,
@@ -336,5 +476,5 @@
   },
   "timezone": "browser",
   "title": "UPS_modo",
-  "version": 2
+  "version": 4
 }
