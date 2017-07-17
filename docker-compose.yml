@@ -5,6 +5,8 @@ services:
     image: influxdb
     volumes:
       - ${PWD}/influx-data:/var/lib/influxdb:Z  
+    ports:
+      - 8083:8083
   grafana:
     depends_on: ["influxdb"]
     image: grafana/grafana
